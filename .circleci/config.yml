@@ -1,0 +1,68 @@
+version: 2.1
+
+orbs:
+  gh: circleci/github-cli@2.2.0
+  slack: circleci/slack@4.12.5
+
+commands:
+  npm-install:
+    steps:
+      - run:
+          name: 'NPM Install'
+          command: |
+            echo "npm install..."
+            sleep 3
+
+  npm-run-build:
+    steps:
+      - run:
+          name: 'npm run build'
+          command: |
+            echo "npm build..."
+            sleep 5
+
+jobs:
+  Build:
+    docker:
+      - image: cimg/node:21.1.0
+    steps:
+      - checkout
+      - npm-install
+      - npm-run-build
+
+  Auto-merge Dependabot PR:
+    parameters:
+      patch:
+        type: boolean
+        default: true
+      minor:
+        type: boolean
+        default: false
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - gh/setup 
+      - run:
+          name: Check merge status
+          command: bash .circleci/check-merge-status.sh << parameters.patch >> << parameters.minor >>
+      - run:
+          name: Merge PR
+          command: |
+            gh pr merge --admin --delete-branch --rebase
+
+workflows:
+  version: 2
+  My workflow:
+    jobs:
+      - Build
+      - Auto-merge Dependabot PR:
+          requires:
+            - Build
+          minor: true
+          context:
+            - GITHUB_ACCESS
+          filters:
+            branches:
+              only: 
+                - /^dependabot.*/

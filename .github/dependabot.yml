@@ -1,0 +1,66 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "13:02"
+      timezone: "Europe/London"
+    open-pull-requests-limit: 10
+    groups:
+      production-minor-version-updates:
+        dependency-type: "production"
+        applies-to: "version-updates"
+        update-types: 
+          - "minor"
+      production-patch-version-updates:
+        dependency-type: "production"
+        applies-to: "version-updates"
+        update-types: 
+          - "patch"
+      development-minor-version-updates:
+        dependency-type: "development"
+        applies-to: "version-updates"
+        update-types: 
+          - "minor"
+      development-patch-version-updates:
+        dependency-type: "development"
+        applies-to: "version-updates"
+        update-types: 
+          - "patch"
+      production-major-security-updates:
+        dependency-type: "production"
+        applies-to: "security-updates"
+        update-types: 
+          - "major"
+      production-minor-security-updates:
+        dependency-type: "production"
+        applies-to: "security-updates"
+        update-types: 
+          - "minor"
+      production-patch-security-updates:
+        dependency-type: "production"
+        applies-to: "security-updates"
+        update-types: 
+          - "patch"
+      development-major-security-updates:
+        dependency-type: "development"
+        applies-to: "security-updates"
+        update-types: 
+          - "major"
+      development-minor-security-updates:
+        dependency-type: "development"
+        applies-to: "security-updates"
+        update-types: 
+          - "minor"
+      development-patch-security-updates:
+        dependency-type: "development"
+        applies-to: "security-updates"
+        update-types: 
+          - "patch"
+    ignore:
+      - dependency-name: "*"
+        update-types: 
+          - "version-update:semver-major"
+      - dependency-name: "@marco-polo/*"
+      - dependency-name: "@gocity/*"
