@@ -4,8 +4,7 @@
 author=$(git log -1 --pretty=format:'%an')
 if [ "$author" != "dependabot[bot]" ]; then
   echo "PR is not from dependabot! Skipping..."
-  # ending job without failure
-  circleci step halt
+  exit 1
 fi
 
 max_retries=3
@@ -90,4 +89,4 @@ if ( [ "$minor" == "true" ] && contains_keywords "$pr_title" "${minor_keywords[@
 fi
 
 echo "Skipping job. None of the conditions have been met."
-circleci-agent step halt
+exit 1
