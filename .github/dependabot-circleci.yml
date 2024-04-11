@@ -1,0 +1,2 @@
+target-branch: main
+schedule: "daily" # Options are (daily, weekly, monthly)
