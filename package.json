@@ -180,8 +180,8 @@
     "svg-captcha": "^1.4.0",
     "swagger-ui-express": "^5.0.1",
     "ts-node-dev": "^1.1.6",
-    "unzipper": "0.11.6",
-    "web3": "^4.9.0",
+    "unzipper": "0.12.1",
+    "web3": "^4.10.0",
     "winston": "^3.3.3",
     "yaml-schema-validator": "^1.2.2",
     "z85": "^0.0.2"
